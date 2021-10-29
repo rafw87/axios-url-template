@@ -1,0 +1,47 @@
+{
+  "name": "axios-url-template",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "start": "ts-node example/example.ts",
+    "test": "jest",
+    "build": "tsc"
+  },
+  "keywords": [
+    "uri-template",
+    "uri template",
+    "uri",
+    "url",
+    "rfc 6570",
+    "url template",
+    "url-template",
+    "axios"
+  ],
+  "author": "Rafal Witczak <rafal.witczak87@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "url-template": "^2.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/jest": "^27.0.2",
+    "@types/url-template": "^2.0.28",
+    "axios": "^0.24.0",
+    "babel-jest": "^27.3.1",
+    "jest": "^27.3.1",
+    "nock": "^13.1.4",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  },
+  "peerDependencies": {
+    "axios": "*"
+  }
+}
