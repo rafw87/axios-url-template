@@ -7,7 +7,10 @@ It uses [url-template](https://www.npmjs.com/package/url-template) package and w
 
 ## Usage
 ```typescript
-import { urlTemplateInterceptor, useUrlTemplateInterceptor } from "axios-url-template";
+import {
+  urlTemplateInterceptor,
+  useUrlTemplateInterceptor,
+} from "axios-url-template";
 
 // attaching interceptor to Axios global instance
 axios.interceptors.request.use(urlTemplateInterceptor());
@@ -16,7 +19,9 @@ axios.interceptors.request.use(urlTemplateInterceptor());
 useUrlTemplateInterceptor(axios);
 
 // passing options
-axios.interceptors.request.use(urlTemplateInterceptor({ urlAsTemplate: false }));
+axios.interceptors.request.use(urlTemplateInterceptor({
+  urlAsTemplate: false,
+}));
 useUrlTemplateInterceptor(axios, { urlAsTemplate: false });
 
 // attaching interceptor to Axios instance
@@ -26,20 +31,35 @@ useUrlTemplateInterceptor(instance);
 
 // example requests
 const response1 = await axios.get('/test/{id}', {
-  urlTemplateParams: { id: 123 }
+  urlTemplateParams: { id: 123 },
 });
-// url = '/test/123'
+// config:
+// {
+//   url: '/test/123',
+//   urlTemplate: '/test/{id}',
+//   urlTemplateParams: { id: 123 }
+// }
 
 const response2 = await axios.get('/test{?foo,bar}', {
-  urlTemplateParams: { foo: 'foo1', bar: 'bar1' }
+  urlTemplateParams: { foo: 'foo1', bar: 'bar1' },
 });
-// url = '/test?foo=foo1&bar=bar1'
+// config:
+// {
+//   url: '/test?foo=foo1&bar=bar1',
+//   urlTemplate: '/test{?foo,bar}',
+//   urlTemplateParams: { foo: 'foo1', bar: 'bar1' },
+// }
 
 const response3 = await axios.request({
   urlTemplate: '/test/{id}',
-  urlTemplateParams: { id: 123 }
+  urlTemplateParams: { id: 123 },
 });
-// url = '/test/123'
+// config:
+// {
+//   url: '/test/123',
+//   urlTemplate: '/test/{id}',
+//   urlTemplateParams: { id: 123 },
+// }
 ```
 
 ### Options
@@ -76,7 +96,7 @@ but it increases overhead and may generate mistakes.
 The interceptor ensures consistency, as actual URL provided to Axios is computed
 from route (url template) and parameters.
 
-Example:
+Example (in TypeScript):
 ```typescript
 import axios, { AxiosResponse } from 'axios';
 import { useUrlTemplateInterceptor } from "axios-url-template";
@@ -84,8 +104,9 @@ import { useUrlTemplateInterceptor } from "axios-url-template";
 // example logging interceptor
 function loggingInterceptor(response: AxiosResponse) {
   const { status, statusText } = response;
-  const { url, urlTemplate, urlTemplateParams } = response.config;
-  
+  const { urlTemplate, urlTemplateParams } = response.config;
+  const url = axios.getUri(response.config);
+
   const logObject = {
     status,
     statusText,
@@ -95,7 +116,7 @@ function loggingInterceptor(response: AxiosResponse) {
   };
 
   // do something with such log object
-  console.log(logObject);
+  console.log(JSON.stringify(logObject, null, 2));
 }
 
 // attach url template interceptor
@@ -105,31 +126,38 @@ useUrlTemplateInterceptor(axios, { urlAsTemplate: true })
 axios.interceptors.response.use(loggingInterceptor);
 
 async function execute() {
-  await axios.get('https://postman-echo.com/status/{status}', {
-    urlTemplateParams: { status: 201 }
+  await axios.get("https://postman-echo.com/status/{status}", {
+    urlTemplateParams: { status: 201 },
   });
 
-  await axios.get('https://postman-echo.com/get{?foo,bar}', {
-    urlTemplateParams: { foo: 'foo1', bar: 'bar1' }
+  await axios.get("https://postman-echo.com/get{?foo,bar}", {
+    urlTemplateParams: { foo: "foo1", bar: "bar1" },
+    params: { baz: 'baz1' }, // additional param, not being part of route
   });
 }
+execute().catch(console.error);
 ```
 
 Result:
-```
+```jsonl
 {
-  status: 201,
-  statusText: 'Created',
-  url: 'https://postman-echo.com/status/201',
-  route: 'https://postman-echo.com/status/{status}',
-  routeParams: { status: 201 }
+  "status": 201,
+  "statusText": "Created",
+  "url": "https://postman-echo.com/status/201",
+  "route": "https://postman-echo.com/status/{status}",
+  "routeParams": {
+    "status": 201
+  }
 }
 {
-  status: 200,
-  statusText: 'OK',
-  url: 'https://postman-echo.com/get?foo=foo1&bar=bar1',
-  route: 'https://postman-echo.com/get{?foo,bar}',
-  routeParams: { foo: 'foo1', bar: 'bar1' }
+  "status": 200,
+  "statusText": "OK",
+  "url": "https://postman-echo.com/get?foo=foo1&bar=bar1&baz=baz1",
+  "route": "https://postman-echo.com/get{?foo,bar}",
+  "routeParams": {
+    "foo": "foo1",
+    "bar": "bar1"
+  }
 }
 ```
 
