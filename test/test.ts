@@ -1,4 +1,4 @@
-import { urlTemplateInterceptor, useUrlTemplateInterceptor } from "../src";
+import { urlTemplateInterceptor, useUrlTemplateInterceptor } from "axios-url-template";
 import {
   AxiosInstance,
   AxiosInterceptorManager,

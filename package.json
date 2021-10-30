@@ -11,6 +11,7 @@
   "scripts": {
     "start": "ts-node example/example.ts",
     "test": "jest",
+    "test:dist": "cross-env TEST_DIST=1 jest",
     "build": "tsc"
   },
   "keywords": [
@@ -36,6 +37,7 @@
     "@types/url-template": "^2.0.28",
     "axios": "^0.24.0",
     "babel-jest": "^27.3.1",
+    "cross-env": "^7.0.3",
     "jest": "^27.3.1",
     "nock": "^13.1.4",
     "ts-node": "^10.4.0",
