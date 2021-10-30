@@ -1,7 +1,7 @@
 {
   "name": "axios-url-template",
-  "version": "0.1.5",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Axios interceptor adding support for URL templates.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
