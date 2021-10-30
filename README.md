@@ -1,5 +1,10 @@
 # axios-url-template
 
+[![npm version](https://img.shields.io/npm/v/axios-url-template.svg?style=flat-square)](https://www.npmjs.org/package/axios-url-template)
+![Build status](https://github.com/rafw87/axios-url-template/actions/workflows/test.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/rafw87/axios-url-template/badge.svg?branch=master)](https://coveralls.io/github/rafw87/axios-url-template?branch=master)
+[![install size](https://packagephobia.now.sh/badge?p=axios-url-template)](https://packagephobia.now.sh/result?p=axios-url-template)
+
 This package adds support for URL templates to [Axios](https://www.npmjs.com/package/axios),
 according to [RFC 6570 URI Template specification](https://datatracker.ietf.org/doc/html/rfc6570).
 

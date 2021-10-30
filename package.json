@@ -8,6 +8,11 @@
     "dist",
     "types"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafw87/axios-url-template.git"
+  },
+  "homepage": "https://github.com/rafw87/axios-url-template#readme",
   "scripts": {
     "start": "ts-node example/example.ts",
     "test": "jest",
