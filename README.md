@@ -7,29 +7,22 @@ It uses [url-template](https://www.npmjs.com/package/url-template) package and w
 
 ## Usage
 ```typescript
-import {
-  urlTemplateInterceptor,
-  useUrlTemplateInterceptor,
-} from "axios-url-template";
+import { urlTemplateInterceptor } from "axios-url-template";
 
 // attaching interceptor to Axios global instance
 axios.interceptors.request.use(urlTemplateInterceptor());
-
-// shortcut method
-useUrlTemplateInterceptor(axios);
 
 // passing options
 axios.interceptors.request.use(urlTemplateInterceptor({
   urlAsTemplate: false,
 }));
-useUrlTemplateInterceptor(axios, { urlAsTemplate: false });
 
 // attaching interceptor to Axios instance
 const instance = axios.create({ /* ... */});
 instance.interceptors.request.use(urlTemplateInterceptor());
-useUrlTemplateInterceptor(instance);
 
 // example requests
+
 const response1 = await axios.get('/test/{id}', {
   urlTemplateParams: { id: 123 },
 });
@@ -61,28 +54,38 @@ const response3 = await axios.request({
 //   urlTemplateParams: { id: 123 },
 // }
 ```
+Interceptor may be also registered using shortcut method:
+```typescript
+import { useUrlTemplateInterceptor } from "axios-url-template";
+
+useUrlTemplateInterceptor(axios);
+
+const instance = axios.create({ /* ... */});
+useUrlTemplateInterceptor(instance, { urlAsTemplate: false });
+```
+
 
 ### Options
 - `urlAsTemplate`: when set to `true`, then `url` is treated as template and possibly interpolated.
-  When set to `false` it does not touch `url` unless `urlTemplate` is also specified. Default: `true`.
+  When set to `false` it does not touch `url` unless `urlTemplate` is explicitly specified. Default: `true`.
 
 
 ## Behavior
 
 When `urlTemplate` (and optional `urlTemplateParams`) is provided in Axios config object,
-this interceptor uses it to generate `url`. Those fields are persisted in config object,
-so after this interceptor config will contain all of those fields:
+this interceptor uses it to generate `url`. Those template fields are persisted in config object,
+so after execution config will contain all of those fields:
 - `url`
 - `urlTemplate`
 - `urlTemplateParams` - when no parameter are provided it will be an empty object
 
-When `urlAsTemplate` option is set to `true`, then `url` will be also treated as url template
-and passed through interpolation. In this case, after this interceptor,
-`urlTemplate` and `urlTemplateParams` will be added accordingly, and `url` will be replaced
-with interpolated value, giving the same effect as for `urlTemplate`.
+When `urlAsTemplate` option is set to `true` (default), then `url` will be also treated as url template
+and passed through interpolation. In this case, `urlTemplate` and `urlTemplateParams`
+will be added accordingly, and `url` will be replaced  with interpolated value,
+giving the same effect as for `urlTemplate`.
 
 When no `urlTemplate` is provided and `urlAsTemplate` option is set to `false` then
-this interceptor passes request config without any changes.
+the interceptor passes request config without any changes.
 
 
 ## Use cases
