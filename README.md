@@ -10,7 +10,19 @@ according to [RFC 6570 URI Template specification](https://datatracker.ietf.org/
 
 It uses [url-template](https://www.npmjs.com/package/url-template) package and wraps it into Axios interceptor.
 
+## Installation
+
+```bash
+$ npm install axios-url-template
+```
+or
+```bash
+$ yarn add axios-url-template
+```
+
+
 ## Usage
+
 ```typescript
 import { urlTemplateInterceptor } from "axios-url-template";
 
