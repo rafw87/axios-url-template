@@ -27,6 +27,9 @@
     "rfc 6570",
     "url template",
     "url-template",
+    "url interpolation",
+    "url substitution",
+    "url variables",
     "axios"
   ],
   "author": "Rafal Witczak <rafal.witczak87@gmail.com>",
