@@ -23,23 +23,31 @@ $ yarn add axios-url-template
 
 ## Usage
 
+Importing library:
 ```typescript
 import { urlTemplateInterceptor } from "axios-url-template";
+```
 
-// attaching interceptor to Axios global instance
+Attaching interceptor to Axios global instance:
+```typescript
 axios.interceptors.request.use(urlTemplateInterceptor());
+```
 
-// passing options
+Passing options:
+```typescript
 axios.interceptors.request.use(urlTemplateInterceptor({
   urlAsTemplate: false,
 }));
+```
 
-// attaching interceptor to Axios instance
+Attaching interceptor to Axios instance
+```typescript
 const instance = axios.create({ /* ... */});
 instance.interceptors.request.use(urlTemplateInterceptor());
+```
 
-// example requests
-
+Example requests:
+```typescript
 const response1 = await axios.get('/test/{id}', {
   urlTemplateParams: { id: 123 },
 });
